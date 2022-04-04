@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 
 import Card from "../UI/Card";
 import Button from "../UI/Button";
@@ -6,6 +6,9 @@ import classes from "./AddUser.module.css";
 import ErrorModal from "../UI/ErrorModal";
 
 const AddUser = (props) => {
+  const nameInputRef = useRef();
+  const ageInputRef = useRef();
+
   const [enteredUsername, setEnteredUsername] = useState("");
   const [enteredAge, setEnteredAge] = useState("");
   const [error, setError] = useState(null);
@@ -20,6 +23,8 @@ const AddUser = (props) => {
       setError({ title: "無效的年齡", message: "年齡必須為正整數" });
       return;
     }
+    console.log(nameInputRef.current.value);
+    console.log(ageInputRef.current.value);
     props.onAddUser(enteredUsername, enteredAge);
     setEnteredUsername("");
     setEnteredAge("");
@@ -55,6 +60,7 @@ const AddUser = (props) => {
             value={enteredUsername}
             placeholder="輸入名稱"
             onChange={usernameChangeHandler}
+            ref={nameInputRef}
           />
           <label htmlFor="age">年齡 (Years)</label>
           <input
@@ -63,6 +69,7 @@ const AddUser = (props) => {
             value={enteredAge}
             placeholder="輸入年齡"
             onChange={ageChangeHandler}
+            ref={ageInputRef}
           />
           <Button type="submit">添加用戶</Button>
         </form>
